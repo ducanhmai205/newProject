@@ -15,7 +15,7 @@ class TopScreen extends Component {
   render() {
         const { navigate } = this.props.navigation;
         const Backgrounds = {
-          Login: require('../img/top.png')
+          Login: require('../img/topscreen.png')
 };
     return (
       <View style={styles.container}>

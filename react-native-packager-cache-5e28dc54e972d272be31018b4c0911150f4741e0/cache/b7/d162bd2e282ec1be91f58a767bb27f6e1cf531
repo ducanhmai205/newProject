@@ -22,11 +22,16 @@ var _LoginFB = require('../screens/LoginFB');
 
 var _LoginFB2 = _interopRequireDefault(_LoginFB);
 
+var _LoginScreen = require('../screens/LoginScreen.js');
+
+var _LoginScreen2 = _interopRequireDefault(_LoginScreen);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RootNavigation = (0, _reactNavigation.StackNavigator)({
   TopScreen: { screen: _TopScreen2.default },
-  RegisterScreen: { screen: _RegisterScreen2.default }
+  RegisterScreen: { screen: _RegisterScreen2.default },
+  LoginScreen: { screen: _LoginScreen2.default }
 
 }, {
   headerMode: 'none'

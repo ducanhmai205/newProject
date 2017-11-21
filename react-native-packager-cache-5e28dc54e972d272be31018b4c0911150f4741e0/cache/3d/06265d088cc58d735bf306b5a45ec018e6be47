@@ -62,7 +62,7 @@ var TopScreen = _wrapComponent('TopScreen')(function (_Component) {
       var navigate = this.props.navigation.navigate;
 
       var Backgrounds = {
-        Login: require('../img/top.png')
+        Login: require('../img/topscreen.png')
       };
       return _react3.default.createElement(
         _reactNative.View,

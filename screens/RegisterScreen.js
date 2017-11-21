@@ -6,158 +6,106 @@ import {
   StyleSheet,
   View,
   Image,
+  Platform,
   TouchableOpacity,
   TextInput,
-  Text,
-  Alert
+  Text
 } from 'react-native';
-import { LinearGradient } from 'expo';
-
-
+import { Font } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
 class RegisterScreen extends Component {
-   constructor(props) {
- 
-    super(props)
- 
-    this.state = {
- 
-      UserName: '',
-      UserEmail: '',
-      UserPassword: '',
-    value: 0
-    }
- 
-  }
- handleOnPress(value){
-    this.setState({value:value})
-}
-UserRegistrationFunction = () =>{
- 
- 
- const { UserName }  = this.state ;
- const { UserEmail }  = this.state ;
- const { UserPassword }  = this.state ;
- 
- 
- 
-fetch('http://192.168.1.56/KhoahocAPI/user_registration.php', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
- 
-    name: UserName,
- 
-    email: UserEmail,
- 
-    password: UserPassword
- 
-  })
- 
-}).then((response) => response.json())
-      .then((responseJson) => {
- 
+  state = {
+    fontLoaded: false,
+  };
+  async componentDidMount() {
+    await Font.loadAsync({
+      'pomeranian': require('../assets/fonts/pomeranian.ttf'),
+    });
 
-        Alert.alert(responseJson);
- 
-      }).catch((error) => {
-        console.error(error);
-      });
- 
- 
+    this.setState({ fontLoaded: true });
   }
   render() {
     return (
       <View style={styles.container}>
-        <Image  source={require('../img/registerscreen.png')} style={styles.backgroundImage}>
-         <View style={styles.wrap}>
-          <View style={styles.text}>
-
-
-      </View>
-      <View style={styles.fbbutton}>
-      <TouchableOpacity  style={{flex: 1,}}>
-        <View style={styles.facebookButton}>
-           <Text style={styles.TextStyle}> Facebook アカウントで登録 </Text>
-         </View>
-      </TouchableOpacity>
-      </View>
-      <View style={styles.orButton}>
-
-
-      </View>
-      <View style={styles.nameInput}>
-        <TextInput
-            style={{flex: 1,paddingLeft: 20}}
-            underlineColorAndroid='transparent'
-                        placeholder="Name"
-                        placeholderTextColor = "#47E5B3"
-                        onChangeText={UserName => this.setState({UserName})}
-                     />
-
-      </View>
-      
-      <View style={styles.emailInput}>
-        <TextInput
-            style={{flex: 1,paddingLeft: 20}}
-            underlineColorAndroid='transparent'
-            keyboardType= 'email-address'
-                        placeholder="E-mail"
-                        placeholderTextColor = "#47E5B3"
-                        onChangeText={UserEmail => this.setState({UserEmail})}
-                     />
-
-      </View>
-
-      <View style={styles.passwordInput}>
-        <TextInput
-            style={{flex: 1,paddingLeft: 20}}
-            underlineColorAndroid='transparent'
-                        placeholder="Password"
-                        placeholderTextColor = "#47E5B3"
-                        onChangeText={UserPassword => this.setState({UserPassword})}
-                        secureTextEntry
-                     />
-
-      </View>
-             
-      <View style={styles.checkboxButton}>
-
+        <Image  source={require('../img/signin1.png')} style={styles.backgroundImage}>
+          <View style={styles.containerImage}>
+              <View style={styles.textHeader}>
               
-               
+                            <TouchableOpacity  style={{flex: 0.2,}}>
+                                  <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
+                             
+                                  </Image>
+                            </TouchableOpacity>
 
-      </View> 
+                    
+              </View>
+
+                    <View style={styles.fbButton}>
+                      <TouchableOpacity  style={{flex: 1,}}>
+                            <Image  source={require('../img/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
+                            </Image>
+                      </TouchableOpacity>
+                    </View>
+
+                          <View style={styles.orButton}>
+
+                          </View>
+
+                              <View style={styles.nameInput}>
+                                    <TextInput
+                                          style={{flex: 1,paddingLeft: 40}}
+                                          underlineColorAndroid='transparent'
+                                                      placeholder="Name"
+                                                      placeholderTextColor = "#47E5B3"
+                                          onChangeText={UserName => this.setState({UserName})}
+                                    />
+
+                              </View>
+
+                                    <View style={styles.emailInput}>
+                                        <TextInput
+                                                    style={{flex: 1,paddingLeft: 40}}
+                                                    underlineColorAndroid='transparent'
+                                                    keyboardType= 'email-address'
+                                                                placeholder="E-mail"
+                                                                placeholderTextColor = "#47E5B3"
+                                                                onChangeText={UserEmail => this.setState({UserEmail})}
+                                         />
+                                    </View>
+
+                                        <View style={styles.passwordInput}>
+                                            <TextInput
+                                                    style={{flex: 1,paddingLeft: 5}}
+                                                    underlineColorAndroid='transparent'
+                                                                placeholder="Password"
+                                                                placeholderTextColor = "#47E5B3"
+                                                                onChangeText={UserPassword => this.setState({UserPassword})}
+                                                                secureTextEntry
+                                            />
+                                            <TouchableOpacity  >
+                                             <Ionicons name="ios-eye" size={20} />
+                                             </TouchableOpacity>
 
 
-      <View style={styles.registerButton}>
-        <TouchableOpacity style={{flex: 1,marginVertical: 2}} onPress={this.UserRegistrationFunction}>
-            <LinearGradient
-                       colors={['#54D6C7','#c7f79e']}
-                       
-                        start={{x: 0.0, y: 0}}
-                        end={{x: 1.6, y: 0}}
-                       style={{ flex:1, alignItems: 'center', justifyContent: 'center', borderRadius: 40 }}
-                     >
-                       <Text style={{ fontSize:17,fontWeight: 'bold',color: '#fff', backgroundColor: 'transparent' }}>
-                       会 員 登 録
-                       </Text>
-                       </LinearGradient>
-        </TouchableOpacity>
+                                        </View>
 
-      </View>  
+                                          <View style={styles.checkBox}>
 
-      <View style={styles.loginButton}>
-        <View style={styles.loginButton1}>
+                                           </View>
 
-        </View> 
+                                              <View style={styles.registerButton}>
+                                                    <TouchableOpacity  style={{flex: 1,}}>
+                                                          <Image  source={require('../img/signinbutton.png')} style={{flex: 1,width:null,height:null}}>
+                                                          </Image>
+                                                    </TouchableOpacity>
+                                              </View>
 
-      </View> 
-
-       </View> 
+                                                  <View style={styles.loginButton}>
+                                                        
+                                                  </View>
+          </View>                                     
         </Image>
-       </View>
+      </View>
     );
   }
 }
@@ -165,107 +113,68 @@ fetch('http://192.168.1.56/KhoahocAPI/user_registration.php', {
 const styles = StyleSheet.create({
 container:{
   flex: 1,
-  backgroundColor: 'white',
-},
-wrap:{
-flex: 1,
-paddingHorizontal:36,
-
-},
-TextStyle:{
- fontSize:13,
-textAlign:'center',
-color: '#fff',
- backgroundColor: 'transparent',
-justifyContent: 'center', alignItems: 'center'
+  backgroundColor:'white'
 },
 backgroundImage:{
   flex: 1,
-    width: null,
-    height: null,
-},
-text:{
-  flex: 1.4,
-
-  marginTop: 2
+  height:null,
+  width:null,
   
 },
-fbbutton:{
- flex: 0.6,
- marginTop: 2,
-  paddingBottom: 9,
-  paddingTop: 2.5,
+containerImage:{
+flex: 1,
 
 },
-facebookButton:{
-  flex: 1,
-  backgroundColor: '#414eb3',
-  justifyContent: 'center', alignItems: 'center',
-   borderBottomLeftRadius: 45, borderBottomRightRadius: 45,
-     borderTopLeftRadius: 45, borderTopRightRadius: 45,
+textHeader:{
+   flex: 1.1,
+flexDirection:'row',
+ paddingHorizontal:23,
+justifyContent: 'flex-end',
+alignItems: 'center',
+
+},
+fbButton:{
+  flex: 0.85,
+  marginLeft:3,
+  paddingTop:2,
+  paddingHorizontal:23,
 },
 orButton:{
-  flex: 1.5,
+flex: 1.3,
 
-  marginTop: 5
 },
 nameInput:{
-  flex: 1,
-
-  marginTop: 1
+  flex: 0.9,
+  paddingHorizontal:23,
 },
 emailInput:{
-  flex: 1,
-   
- 
+  flex: 0.9,
+  paddingHorizontal:23,
 },
 passwordInput:{
-  flex: 1,
-    
-},
-checkboxButton:{
-  flex: 1.4,
+  flex: 0.9,
   flexDirection:'row',
+  paddingHorizontal:58,
+
   justifyContent: 'center',
   alignItems: 'center',
-  marginBottom: 8,
-  
-  
 },
-textRadio1:{
-backgroundColor:'rgba(0,0,0,0)',
-paddingLeft: 10,
-paddingRight: 20
-},
-textRadio2:{
-backgroundColor:'rgba(0,0,0,0)',
-paddingLeft: 10
+checkBox:{
+ flex: 1.2,
+
 },
 registerButton:{
-  flex: 0.65,
- 
-
-  borderWidth: 1.5,
-  borderBottomLeftRadius: 40, borderBottomRightRadius: 40,
-  borderTopLeftRadius: 40, borderTopRightRadius: 40,
-  borderColor:'white',
+flex: 0.7,
+  paddingHorizontal:18,
+  marginLeft:5
 },
 loginButton:{
-  flex: 1.4,
-  flexDirection:'row-reverse',
-  marginTop: 2,
- 
-},
-loginButton1:{
-  flex: 0.5,
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginLeft: 130,
-  marginVertical: 30,
-  marginRight:30
-  
-}
+flex: 1.2,
 
+justifyContent: 'center',
+backgroundColor: 'rgba(0,0,0,0)',
+paddingLeft:20
+},
 });
 
 
