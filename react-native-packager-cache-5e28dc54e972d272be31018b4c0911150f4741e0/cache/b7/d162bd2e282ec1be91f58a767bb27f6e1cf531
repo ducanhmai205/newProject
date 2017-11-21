@@ -1,0 +1,34 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactNative = require('react-native');
+
+var _reactNavigation = require('react-navigation');
+
+var _TopScreen = require('../screens/TopScreen');
+
+var _TopScreen2 = _interopRequireDefault(_TopScreen);
+
+var _RegisterScreen = require('../screens/RegisterScreen');
+
+var _RegisterScreen2 = _interopRequireDefault(_RegisterScreen);
+
+var _LoginFB = require('../screens/LoginFB');
+
+var _LoginFB2 = _interopRequireDefault(_LoginFB);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RootNavigation = (0, _reactNavigation.StackNavigator)({
+  TopScreen: { screen: _TopScreen2.default },
+  RegisterScreen: { screen: _RegisterScreen2.default }
+
+}, {
+  headerMode: 'none'
+});
+exports.default = RootNavigation;
