@@ -14,15 +14,72 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+import LoginFB from '../screens/LoginFB';
 class LoginScreen extends Component {
+  constructor(props) {
+ 
+    super(props)
+ 
+    this.state = {
+ 
+      UserEmail: '',
+      UserPassword: ''
+ 
+    }
+ 
+  }
+ 
+
+UserLoginFunction = () =>{
+ 
+
+ 
+ 
+fetch('http://192.168.1.28/Mare/User_Login.php', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+ 
+    email: this.state.UserEmail,
+ 
+    password: this.state.UserPassword
+ 
+  })
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+ 
+        // If server response message same as Data Matched
+       if(responseJson === 'Data Matched')
+        {
+ 
+            //Then open Profile activity and send user email to profile activity.
+            this.props.navigation.navigate('WelcomeScreen', { Email: this.state.UserEmail,  });
+ 
+        }
+        else{
+ 
+          Alert.alert(responseJson);
+        }
+ 
+      }).catch((error) => {
+        console.error(error);
+      });
+ 
+  }
   render() {
+        const {goBack} = this.props.navigation;
+
     return (
       <View style={styles.container}>
-            <Image  source={require('../img/loginscreen.png')} style={styles.backgroundImage}>
+            <Image  source={require('../img/user/login.png')} style={styles.backgroundImage}>
                   <View style={styles.containerImage}>
                         <View style={styles.textHeader}>
                                 
-                            <TouchableOpacity  style={{flex: 0.2,}}>
+                            <TouchableOpacity  style={{flex: 0.2,}} onPress={() => goBack()}>
                                   <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
                              
                                   </Image>
@@ -32,8 +89,7 @@ class LoginScreen extends Component {
                         </View>
                               <View style={styles.fbButton}>
                                     <TouchableOpacity  style={{flex: 1,}}>
-                                          <Image  source={require('../img/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
-                                          </Image>
+                                          <LoginFB> </LoginFB>
                                     </TouchableOpacity>
 
 
@@ -68,7 +124,7 @@ class LoginScreen extends Component {
                                                             secureTextEntry
                                         
                                                        />   
-                                                   <TouchableOpacity  >
+                                                   <TouchableOpacity  style={{backgroundColor:'rgba(0,0,0,0)'}}>
                                              <Ionicons name="ios-eye" size={20} />
                                              </TouchableOpacity>
 
@@ -78,7 +134,7 @@ class LoginScreen extends Component {
 
                                                        </View> 
                                                     <View style={styles.loginButton}>
-                                                              <TouchableOpacity  style={{flex: 1,}}>
+                                                              <TouchableOpacity  style={{flex: 1,}} onPress={this.UserLoginFunction}>
                                                           <Image  source={require('../img/1loginbutton.png')} style={{flex: 1,width:null,height:null}}>
                                                           </Image>
                                                     </TouchableOpacity>
@@ -139,7 +195,7 @@ flex: 0.9,
 },
 nameInput:{
 flex: 0.6,
-paddingLeft:26,
+paddingLeft:25,
 
 },
 passwordInput:{

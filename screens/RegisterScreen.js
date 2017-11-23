@@ -9,10 +9,13 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import LoginFB from '../screens/LoginFB';
 class RegisterScreen extends Component {
   state = {
     fontLoaded: false,
@@ -24,14 +27,91 @@ class RegisterScreen extends Component {
 
     this.setState({ fontLoaded: true });
   }
+  constructor(props) {
+ 
+    super(props)
+ 
+    this.state = {
+ 
+      UserName: '',
+      UserEmail: '',
+      UserPassword: '',
+      value: '',
+      jobID: ''
+      }
+        this.onSelect = this.onSelect.bind(this)
+ }
+  onSelect(value){
+  this.setState({
+    jobID: `${value}`
+  })
+}
+ 
+UserRegistrationFunction = () =>{
+ 
+ 
+ const { UserName }  = this.state ;
+ const { UserEmail }  = this.state ;
+ const { UserPassword }  = this.state ;
+ const { jobID } = this.state;
+ 
+ 
+fetch('http://192.168.1.28/Mare/user_registration.php', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+ 
+    name: UserName,
+ 
+    email: UserEmail,
+ 
+    password: UserPassword,
+
+    job: jobID,
+    
+  })
+ 
+}).then((response) => response.json())
+      .then((responseJson) => {
+ 
+ if(responseJson === 'User')
+        {
+ 
+            this.props.navigation.navigate('WelcomeScreen', { Email: this.state.UserEmail });
+ 
+        }
+        else if(responseJson === 'trainer')
+        {
+ 
+            this.props.navigation.navigate('LoginScreen', { Email: this.state.UserEmail });
+ 
+        }
+        else{
+ 
+          Alert.alert(responseJson);
+        }
+ 
+        
+ 
+      }).catch((error) => {
+        console.error(error);
+      });
+ 
+ 
+  }
+
   render() {
+    const {goBack} = this.props.navigation;
     return (
       <View style={styles.container}>
         <Image  source={require('../img/signin1.png')} style={styles.backgroundImage}>
           <View style={styles.containerImage}>
               <View style={styles.textHeader}>
               
-                            <TouchableOpacity  style={{flex: 0.2,}}>
+                            <TouchableOpacity  style={{flex: 0.2,}}  onPress={() => goBack()}>
                                   <Image  source={require('../img/Xbutton.png')} style={{flex: 0.5,width:null,height:null,marginTop:10}}>
                              
                                   </Image>
@@ -42,8 +122,7 @@ class RegisterScreen extends Component {
 
                     <View style={styles.fbButton}>
                       <TouchableOpacity  style={{flex: 1,}}>
-                            <Image  source={require('../img/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
-                            </Image>
+                             <LoginFB> </LoginFB>
                       </TouchableOpacity>
                     </View>
 
@@ -90,11 +169,26 @@ class RegisterScreen extends Component {
                                         </View>
 
                                           <View style={styles.checkBox}>
+                                            <RadioGroup
+                                              size={15}
+                                              color='#00D6B6'
+                                              thickness={8}
+                                              onSelect = {( value) => this.onSelect( value)}>
 
+                                                 <RadioButton  activeColor='#80d8ff' value={'0'} >
+                                                        <Text style={styles.text3}>ユーザー {this.state.text}</Text>
+                                                 </RadioButton>
+                    
+                                                 <RadioButton activeColor='#80d8ff'  value={'1'}>
+                                                         <Text style={styles.text3}>トレーナー</Text>
+                                                 </RadioButton>
+
+
+                                              </RadioGroup>   
                                            </View>
 
                                               <View style={styles.registerButton}>
-                                                    <TouchableOpacity  style={{flex: 1,}}>
+                                                    <TouchableOpacity  style={{flex: 1,}} onPress={this.UserRegistrationFunction}>
                                                           <Image  source={require('../img/signinbutton.png')} style={{flex: 1,width:null,height:null}}>
                                                           </Image>
                                                     </TouchableOpacity>
@@ -162,6 +256,9 @@ passwordInput:{
 checkBox:{
  flex: 1.2,
 
+flexDirection:'column',
+justifyContent: 'center',
+ paddingHorizontal:23,
 },
 registerButton:{
 flex: 0.7,
@@ -174,6 +271,13 @@ flex: 1.2,
 justifyContent: 'center',
 backgroundColor: 'rgba(0,0,0,0)',
 paddingLeft:20
+},
+text3:{
+  backgroundColor:'rgba(0,0,0,0)',
+  
+  color: 'black',
+ justifyContent: 'center',
+ alignItems: 'center',
 },
 });
 

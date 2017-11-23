@@ -52,10 +52,49 @@ function _wrapComponent(id) {
 var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
   _inherits(LoginScreen, _Component);
 
-  function LoginScreen() {
+  function LoginScreen(props) {
     _classCallCheck(this, LoginScreen);
 
-    return _possibleConstructorReturn(this, (LoginScreen.__proto__ || Object.getPrototypeOf(LoginScreen)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (LoginScreen.__proto__ || Object.getPrototypeOf(LoginScreen)).call(this, props));
+
+    _this.UserLoginFunction = function () {
+
+      fetch('http://192.168.1.28/Mare/User_Login.php', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+
+          email: _this.state.UserEmail,
+
+          password: _this.state.UserPassword
+
+        })
+
+      }).then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        if (responseJson === 'Data Matched') {
+          _this.props.navigation.navigate('WelcomeScreen', { Email: _this.state.UserEmail });
+        } else {
+
+          _reactNative.Alert.alert(responseJson);
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    };
+
+    _this.state = {
+
+      UserEmail: '',
+      UserPassword: ''
+
+    };
+
+    return _this;
   }
 
   _createClass(LoginScreen, [{
@@ -67,40 +106,40 @@ var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
         _reactNative.View,
         { style: styles.container, __source: {
             fileName: _jsxFileName,
-            lineNumber: 20
+            lineNumber: 74
           }
         },
         _react3.default.createElement(
           _reactNative.Image,
           { source: require('../img/loginscreen.png'), style: styles.backgroundImage, __source: {
               fileName: _jsxFileName,
-              lineNumber: 21
+              lineNumber: 75
             }
           },
           _react3.default.createElement(
             _reactNative.View,
             { style: styles.containerImage, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 22
+                lineNumber: 76
               }
             },
             _react3.default.createElement(
               _reactNative.View,
               { style: styles.textHeader, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 23
+                  lineNumber: 77
                 }
               },
               _react3.default.createElement(
                 _reactNative.TouchableOpacity,
                 { style: { flex: 0.2 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 25
+                    lineNumber: 79
                   }
                 },
                 _react3.default.createElement(_reactNative.Image, { source: require('../img/Xbutton.png'), style: { flex: 0.5, width: null, height: null, marginTop: 10 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 26
+                    lineNumber: 80
                   }
                 })
               )
@@ -109,33 +148,33 @@ var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
               _reactNative.View,
               { style: styles.fbButton, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 33
+                  lineNumber: 87
                 }
               },
               _react3.default.createElement(
                 _reactNative.TouchableOpacity,
                 { style: { flex: 1 }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 34
+                    lineNumber: 88
                   }
                 },
                 _react3.default.createElement(_reactNative.Image, { source: require('../img/FBbutton.png'), style: { flex: 1, width: null, height: null }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 35
+                    lineNumber: 89
                   }
                 })
               )
             ),
             _react3.default.createElement(_reactNative.View, { style: styles.orButton, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 42
+                lineNumber: 96
               }
             }),
             _react3.default.createElement(
               _reactNative.View,
               { style: styles.nameInput, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 48
+                  lineNumber: 102
                 }
               },
               _react3.default.createElement(_reactNative.TextInput, {
@@ -149,7 +188,7 @@ var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
                 keybroadType: 'email-address',
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 49
+                  lineNumber: 103
                 }
               })
             ),
@@ -157,7 +196,7 @@ var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
               _reactNative.View,
               { style: styles.passwordInput, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 61
+                  lineNumber: 115
                 }
               },
               _react3.default.createElement(_reactNative.TextInput, {
@@ -172,58 +211,57 @@ var LoginScreen = _wrapComponent('LoginScreen')(function (_Component) {
 
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 62
+                  lineNumber: 116
                 }
               }),
               _react3.default.createElement(
                 _reactNative.TouchableOpacity,
-                {
-                  __source: {
+                { style: { backgroundColor: 'rgba(0,0,0,0)' }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 71
+                    lineNumber: 125
                   }
                 },
                 _react3.default.createElement(_vectorIcons.Ionicons, { name: 'ios-eye', size: 20, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 72
+                    lineNumber: 126
                   }
                 })
               )
             ),
             _react3.default.createElement(_reactNative.View, { style: styles.topButton, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 77
+                lineNumber: 131
               }
             }),
             _react3.default.createElement(
               _reactNative.View,
               { style: styles.loginButton, __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 80
+                  lineNumber: 134
                 }
               },
               _react3.default.createElement(
                 _reactNative.TouchableOpacity,
-                { style: { flex: 1 }, __source: {
+                { style: { flex: 1 }, onPress: this.UserLoginFunction, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 81
+                    lineNumber: 135
                   }
                 },
                 _react3.default.createElement(_reactNative.Image, { source: require('../img/1loginbutton.png'), style: { flex: 1, width: null, height: null }, __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 82
+                    lineNumber: 136
                   }
                 })
               )
             ),
             _react3.default.createElement(_reactNative.View, { style: styles.forgotPass, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 89
+                lineNumber: 143
               }
             }),
             _react3.default.createElement(_reactNative.View, { style: styles.commit, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 95
+                lineNumber: 149
               }
             })
           )

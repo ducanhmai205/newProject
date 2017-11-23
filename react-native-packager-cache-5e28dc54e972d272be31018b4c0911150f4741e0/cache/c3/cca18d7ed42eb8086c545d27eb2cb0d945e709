@@ -139,15 +139,11 @@ var LoginFB = _wrapComponent('LoginFB')(function (_Component) {
               lineNumber: 53
             }
           },
-          _react3.default.createElement(
-            _reactNative.Text,
-            { style: styles.TextStyle, __source: {
-                fileName: _jsxFileName,
-                lineNumber: 54
-              }
-            },
-            ' '
-          )
+          _react3.default.createElement(_reactNative.Image, { source: require('../img/FBbutton.png'), style: { flex: 1, width: null, height: null }, __source: {
+              fileName: _jsxFileName,
+              lineNumber: 54
+            }
+          })
         )
       );
     }

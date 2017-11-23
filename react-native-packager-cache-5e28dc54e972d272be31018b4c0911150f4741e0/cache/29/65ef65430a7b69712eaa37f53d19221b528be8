@@ -49,6 +49,8 @@ function _wrapComponent(id) {
   };
 }
 
+var RCTLog = require('RCTLog');
+
 var App = _wrapComponent('App')(function (_React$Component) {
   _inherits(App, _React$Component);
 

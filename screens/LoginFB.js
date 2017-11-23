@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert,Image } from 'react-native';
 
 import { Facebook } from "expo";
 
@@ -51,7 +51,8 @@ export default class LoginFB extends Component {
       <View style={styles.container}>
         
           <TouchableOpacity  style={styles.one} onPress={this._handleFacebookLogin}>
-                 <Text style={styles.TextStyle}> </Text>
+                     <Image  source={require('../img/FBbutton.png')} style={{flex: 1,width:null,height:null}}>
+                                          </Image>
             </TouchableOpacity>
        
         
